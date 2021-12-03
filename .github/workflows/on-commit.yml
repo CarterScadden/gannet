@@ -1,5 +1,5 @@
 name: ON COMMIT HOOK
-on: [commit]
+on: [push]
 jobs:
   TEST:
     runs-on: ubuntu-latest
