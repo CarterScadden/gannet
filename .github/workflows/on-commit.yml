@@ -1,8 +1,0 @@
-name: ON COMMIT HOOK
-on: [push]
-jobs:
-  TEST:
-    runs-on: ubuntu-latest
-    steps:
-      - run: echo "First step! next should fail"
-      - run: exit 1
