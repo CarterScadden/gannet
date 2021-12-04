@@ -3,7 +3,10 @@ package db
 import "testing"
 
 // TestInsert
-// test that the insert is working properly
+// test that the insert is working properly by
+// inserting a single item and testing if it is there,
+// inserting multiplt items and testing if they are all there
+// TODO: test with a bad produce item
 func TestInsert(t *testing.T) {
 	a := ProduceItem{
 		Name:        "",
