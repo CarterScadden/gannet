@@ -1,10 +1,13 @@
 package db
 
-import "testing"
+import (
+	"gannet/db/produce"
+	"testing"
+)
 
 func TestFetch(t *testing.T) {
 	// TODO: move this array, and the fetchTestProduceItemsEqual to some test utils file
-	items := []ProduceItem{
+	items := []produce.ProduceItem{
 		{
 			ProduceCode: "fetch-1",
 			Name:        "",
@@ -63,7 +66,7 @@ func TestFetch(t *testing.T) {
 	}
 }
 
-func fetchTestProduceItemsEqual(a, b ProduceItem) bool {
+func fetchTestProduceItemsEqual(a, b produce.ProduceItem) bool {
 	return a.Name == b.Name &&
 		a.UnitPrice == b.UnitPrice &&
 		a.ProduceCode == b.ProduceCode

@@ -1,6 +1,9 @@
 package db
 
-import "testing"
+import (
+	"gannet/db/produce"
+	"testing"
+)
 
 // TestInsert
 // test that the insert is working properly by
@@ -8,7 +11,7 @@ import "testing"
 // inserting multiplt items and testing if they are all there
 // TODO: test with a bad produce item
 func TestInsert(t *testing.T) {
-	a := ProduceItem{
+	a := produce.ProduceItem{
 		Name:        "",
 		ProduceCode: "a",
 		UnitPrice:   0.0,
@@ -17,7 +20,7 @@ func TestInsert(t *testing.T) {
 	status, err := Insert(a)
 	testInsertResult(t, status, err, a)
 
-	variadicArguments := []ProduceItem{
+	variadicArguments := []produce.ProduceItem{
 		{
 			Name:        "",
 			ProduceCode: "b",
@@ -35,7 +38,7 @@ func TestInsert(t *testing.T) {
 
 }
 
-func testInsertResult(t *testing.T, status int, err error, ps ...ProduceItem) {
+func testInsertResult(t *testing.T, status int, err error, ps ...produce.ProduceItem) {
 	if err != nil {
 		t.Fatalf("Expected insert of 1 item to pass without error, got error: %s\n", err)
 	}

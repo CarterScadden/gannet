@@ -1,6 +1,7 @@
 package db
 
 import (
+	"gannet/db/produce"
 	"testing"
 )
 
@@ -8,7 +9,7 @@ import (
 // inserts some fake data into the store, and then for every item in the store, tests if deleteing it is possible
 // TODO: test with a code that does not exist
 func TestDelete(t *testing.T) {
-	items := []ProduceItem{
+	items := []produce.ProduceItem{
 		{
 			ProduceCode: "delete-1",
 			Name:        "",
