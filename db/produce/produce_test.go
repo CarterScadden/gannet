@@ -2,8 +2,6 @@ package produce
 
 import "testing"
 
-// TODO: test that the produce functions work
-
 func TestValidateName(t *testing.T) {
 	shouldWork := []string{
 		"Apples",
