@@ -7,7 +7,7 @@ import (
 )
 
 var (
-	produceCodeExpression = regexp.MustCompile(`[A-Z]{4}-[A-Z]{4}-[A-Z]{4}-[A-Z]{4}`)
+	produceCodeExpression = regexp.MustCompile(`[A-Z\d]{4}-[A-Z\d]{4}-[A-Z\d]{4}-[A-Z\d]{4}`)
 	// this allows for space on the end of the string, no mention of this needing to be handled,
 	// but to handle this i would just add a trimEnd to the end of the string
 	// The reason this handles alphanumeric + spaces is because the given example data has
