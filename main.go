@@ -1,13 +1,18 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"gannet/server"
+	"log"
+	"net/http"
+)
+
+const PORT int = 4000
 
 func main() {
-	fmt.Printf("Hello world! %s\n", GetName()+" is great!")
-}
+	server := server.New(PORT)
+	port := fmt.Sprintf(":%d", PORT)
 
-// https://gist.github.com/barberta/2b9253a8f92ae475fa322ad725f67fe1
-
-func GetName() string {
-	return "Gannet"
+	fmt.Printf("Server starting on port %s\n", port)
+	log.Fatal(http.ListenAndServe(port, server))
 }
