@@ -38,7 +38,7 @@ func testInsertResult(t *testing.T, status int, err error, ps ...ProduceItem) {
 	}
 
 	if status != Ok {
-		t.Fatalf("Expcted status of OK, but got: %s\n", getStatus(status))
+		t.Fatalf("Expcted status of OK, but got: %s\n", getErrorStatus(status))
 	}
 
 	// check that the given produce items are in the store
