@@ -12,8 +12,10 @@ RUN go test /app/services/produce
 RUN go test /app/services
 RUN go test /app/server/handlers
 
+FROM base AS build
+RUN go build -o main .
+
 # the main image of the app, can be build and ran with `docker build . -t main-image && docker run -p <port to run on>:4000 main-image`
-FROM base AS app
-RUN go build -o main . 
+FROM build AS app
 EXPOSE 4000
 CMD [ "/app/main" ]

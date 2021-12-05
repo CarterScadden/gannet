@@ -2,6 +2,7 @@ package services
 
 import "gannet/services/produce"
 
-func FetchAll() []produce.ProduceItem {
-	return store
+func FetchAll(c chan []produce.ProduceItem) {
+	c <- store
+	close(c)
 }

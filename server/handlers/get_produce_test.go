@@ -39,7 +39,9 @@ func TestGetProduce(t *testing.T) {
 		t.Fatalf("unable to unmarshal response, reason: %s\n", err)
 	}
 
-	store := services.FetchAll()
+	c := make(chan []produce.ProduceItem)
+	go services.FetchAll(c)
+	store := <-c
 
 	for _, item := range data {
 		found := false

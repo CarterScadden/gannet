@@ -3,13 +3,16 @@ package handlers
 import (
 	"encoding/json"
 	"gannet/services"
+	"gannet/services/produce"
 	"net/http"
 )
 
 // GetProduce
 // endpoint handler for getting a produce item from the store
 func GetProduce(w http.ResponseWriter, r *http.Request) {
-	store := services.FetchAll()
+	c := make(chan []produce.ProduceItem)
+	go services.FetchAll(c)
+	store := <-c
 
 	data, err := json.Marshal(store)
 

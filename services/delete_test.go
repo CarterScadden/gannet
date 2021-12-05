@@ -30,17 +30,15 @@ func TestDelete(t *testing.T) {
 		},
 	}
 
-	unchangedStore := append(store, items...)
 	store = append(store, items...)
 
-	for i := range store {
-		testDelete(t, i)
-		store = unchangedStore
+	for _, item := range items {
+		testDelete(t, item.ProduceCode)
 	}
 }
 
-func testDelete(t *testing.T, index int) {
-	status, err := Delete(store[index].ProduceCode)
+func testDelete(t *testing.T, code string) {
+	status, err := Delete(code)
 
 	if err != nil {
 		t.Fatalf("Expected delete of item to pass without error, got error: %s\n", err)

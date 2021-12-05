@@ -69,13 +69,11 @@ func PostProduce(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	status, err := services.Insert(data...)
+	// TODO: allow bulk add back
+	c := make(chan int)
 
-	if err != nil {
-		w.WriteHeader(status)
-		w.Write([]byte(err.Error()))
-		return
-	}
+	go services.Insert(c, data...)
+	status := <-c
 
-	w.WriteHeader(http.StatusOK)
+	w.WriteHeader(status)
 }

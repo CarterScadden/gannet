@@ -12,10 +12,14 @@ import (
 // Run
 // used to initialze and run the server, takes a argument of the portnumber to use
 func New(port int) *mux.Router {
+	// TODO: routers
 	r := mux.NewRouter()
 	r.Use(loggerMiddleware)
 
 	r.HandleFunc("/ping", handlers.Ping).Methods("GET")
+	r.HandleFunc("/api/v1/produce", handlers.GetProduce).Methods("GET")
+	r.HandleFunc("/api/v1/produce", handlers.PostProduce).Methods("POST")
+	// r.HandleFunc("/api/v1/produce", handlers.PostProduce).Methods("POST")
 
 	http.Handle("/", r)
 

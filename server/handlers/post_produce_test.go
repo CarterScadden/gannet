@@ -57,7 +57,9 @@ func TestPostProduce(t *testing.T) {
 		t.Fatalf("expected status 200, got %d\n", res.StatusCode)
 	}
 
-	store := services.FetchAll()
+	c := make(chan []produce.ProduceItem)
+	go services.FetchAll(c)
+	store := <-c
 
 	for _, item := range items {
 		found := false
@@ -75,5 +77,4 @@ func TestPostProduce(t *testing.T) {
 			t.Fatalf("recieved: %v, which is not in database\n", item)
 		}
 	}
-
 }

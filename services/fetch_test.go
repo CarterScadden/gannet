@@ -1,69 +1,41 @@
 package services
 
 import (
+	"fmt"
 	"gannet/services/produce"
 	"testing"
 )
 
 func TestFetch(t *testing.T) {
-	// TODO: move this array, and the fetchTestProduceItemsEqual to some test utils file
-	items := []produce.ProduceItem{
-		{
-			ProduceCode: "fetch-1",
-			Name:        "",
-			UnitPrice:   0.0,
-		}, {
-			ProduceCode: "fetch-2",
-			Name:        "",
-			UnitPrice:   0.0,
-		}, {
-			ProduceCode: "fetch-3",
-			Name:        "",
-			UnitPrice:   0.0,
-		}, {
-			ProduceCode: "fetch-4",
-			Name:        "",
-			UnitPrice:   0.0,
-		},
-	}
+	c := make(chan *produce.ProduceItem)
 
-	store = append(store, items...)
+	for _, item := range store[0:4] {
+		fmt.Printf("looking for: %v\n", item.ProduceCode)
+		go Fetch(c, item.ProduceCode)
+		found, ok := <-c
 
-	for _, item := range store {
-		fetched := Fetch(item.ProduceCode)
-
-		length := len(fetched)
-
-		if length != 1 {
-			t.Fatalf("number of fetched items for \"Fetch(item.ProduceCode)\" is not 1, got: %d\n", length)
+		if found == nil {
+			t.Fatalf("go Fetch(c, %s) gave an unexpected nil response\n", item.ProduceCode)
 		}
 
-		if !fetchTestProduceItemsEqual(fetched[0], item) {
-			t.Fatalf("fetched item: %v != %v\n", fetched, item)
+		if !ok {
+			t.Fatalf("go Fetch(c, %s) gave a unexpected !ok response\n", item.ProduceCode)
+		}
+
+		if !fetchTestProduceItemsEqual(*found, item) {
+			t.Fatalf("fetched item: %v != %v\n", *found, item)
 		}
 	}
 
-	codes := []string{}
+	go Fetch(c, "<id that should result in a channel close>")
+	found, ok := <-c
 
-	for _, item := range store {
-		codes = append(codes, item.ProduceCode)
+	if ok {
+		t.Fatal("Got Unexpected ok, when looking for expected NotFound\n")
 	}
 
-	codesToFetch := codes[1:]
-	fetched := Fetch(codesToFetch...)
-
-	for _, code := range codesToFetch {
-		found := false
-		for _, item := range fetched {
-			if code == item.ProduceCode {
-				found = true
-				break
-			}
-		}
-
-		if !found {
-			t.Fatalf("Failed to fetch code %s\n", code)
-		}
+	if found != nil {
+		t.Fatalf("Got Unexpected value, when looking for expected NotFound. Got value: `%v`\n", *found)
 	}
 }
 

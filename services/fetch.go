@@ -1,22 +1,20 @@
 package services
 
-import "gannet/services/produce"
+import (
+	"gannet/services/produce"
+)
 
 // Fetch
-// global database function which will grab a ProduceItem from the db.store by the given
-// produceCode
-func Fetch(produceCodes ...string) []produce.ProduceItem {
-	// TODO: potentially a better solution here
-	items := []produce.ProduceItem{}
-
-	for _, code := range produceCodes {
-		for _, item := range store {
-			if code == item.ProduceCode {
-				items = append(items, item)
-				break
-			}
+// global database function which will search for for a produceCode by the given code
+// and return that an address to that value
+// if nothing was found, the channel given is closed
+func Fetch(c chan *produce.ProduceItem, code string) {
+	for _, item := range store {
+		if item.ProduceCode == code {
+			c <- &item
+			return
 		}
 	}
 
-	return items
+	close(c)
 }

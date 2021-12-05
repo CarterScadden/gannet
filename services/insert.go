@@ -1,27 +1,27 @@
 package services
 
 import (
-	"fmt"
 	"gannet/services/produce"
 	"net/http"
 )
 
 // Insert
-// function to append a ProduceItem to the services.store
-// fails with Conflict if any of the given produce items conflict with the store
-// or fails with BadRequest if any of the produce items fail to pass validation
-// else returns an Ok, with a nil error
-func Insert(ps ...produce.ProduceItem) (int, error) {
-	// TODO: potentially a better solution here
+// function to append ProduceItem's to the services.store
+// pushes Conflict if any of the given produce item conflicts with the store
+// else adds the items and pushes OK if everything went well
+func Insert(c chan int, ps ...produce.ProduceItem) {
 	for _, p := range ps {
 		for _, item := range store {
 			if item.ProduceCode == p.ProduceCode {
-				return http.StatusConflict, fmt.Errorf("ProduceCode: \"%s\" already exists in db, denying request", p.ProduceCode)
+				c <- http.StatusConflict
+				return
 			}
 		}
 	}
 
-	store = append(store, ps...)
+	for _, p := range ps {
+		store = append(store, p)
+	}
 
-	return http.StatusOK, nil
+	c <- http.StatusOK
 }
