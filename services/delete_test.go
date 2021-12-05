@@ -2,6 +2,7 @@ package services
 
 import (
 	"gannet/services/produce"
+	"net/http"
 	"testing"
 )
 
@@ -45,7 +46,7 @@ func testDelete(t *testing.T, index int) {
 		t.Fatalf("Expected delete of item to pass without error, got error: %s\n", err)
 	}
 
-	if status != Ok {
-		t.Fatalf("Expcted status of OK, but got: %s\n", getErrorStatus(status))
+	if status != http.StatusOK {
+		t.Fatalf("Expcted status of OK, but got: %d\n", status)
 	}
 }

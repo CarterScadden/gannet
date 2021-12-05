@@ -12,7 +12,7 @@ import (
 // tests that the Ping handler, from ping.go,
 // works as expected with a 200 status code and with "pong" as the response body
 func TestPing(t *testing.T) {
-	url := fmt.Sprintf("%s:%d%s", testHost, testPort, "/ping")
+	url := fmt.Sprintf("%s:%d%s", "http://0.0.0.0", 4000, "/api/v1/produce")
 
 	req := httptest.NewRequest(http.MethodGet, url, nil)
 	w := httptest.NewRecorder()

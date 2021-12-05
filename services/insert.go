@@ -3,6 +3,7 @@ package services
 import (
 	"fmt"
 	"gannet/services/produce"
+	"net/http"
 )
 
 // Insert
@@ -15,12 +16,12 @@ func Insert(ps ...produce.ProduceItem) (int, error) {
 	for _, p := range ps {
 		for _, item := range store {
 			if item.ProduceCode == p.ProduceCode {
-				return Conflict, fmt.Errorf("ProduceCode: \"%s\" already exists in db, denying request", p.ProduceCode)
+				return http.StatusConflict, fmt.Errorf("ProduceCode: \"%s\" already exists in db, denying request", p.ProduceCode)
 			}
 		}
 	}
 
 	store = append(store, ps...)
 
-	return Ok, nil
+	return http.StatusOK, nil
 }

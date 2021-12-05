@@ -33,6 +33,7 @@ func TestFetch(t *testing.T) {
 		fetched := Fetch(item.ProduceCode)
 
 		length := len(fetched)
+
 		if length != 1 {
 			t.Fatalf("number of fetched items for \"Fetch(item.ProduceCode)\" is not 1, got: %d\n", length)
 		}

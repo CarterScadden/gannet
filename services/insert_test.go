@@ -2,6 +2,7 @@ package services
 
 import (
 	"gannet/services/produce"
+	"net/http"
 	"testing"
 )
 
@@ -43,8 +44,8 @@ func testInsertResult(t *testing.T, status int, err error, ps ...produce.Produce
 		t.Fatalf("Expected insert of 1 item to pass without error, got error: %s\n", err)
 	}
 
-	if status != Ok {
-		t.Fatalf("Expcted status of OK, but got: %s\n", getErrorStatus(status))
+	if status != http.StatusOK {
+		t.Fatalf("Expcted status of OK, but got: %d\n", status)
 	}
 
 	// check that the given produce items are in the store
