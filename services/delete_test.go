@@ -38,10 +38,12 @@ func TestDelete(t *testing.T) {
 }
 
 func testDelete(t *testing.T, code string) {
-	status, err := Delete(code)
+	c := make(chan int)
+	go Delete(c, code)
+	status, ok := <-c
 
-	if err != nil {
-		t.Fatalf("Expected delete of item to pass without error, got error: %s\n", err)
+	if !ok {
+		t.Fatal("Expected delete of item to pass ok, got !ok\n")
 	}
 
 	if status != http.StatusOK {
