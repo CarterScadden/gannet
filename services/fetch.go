@@ -1,6 +1,6 @@
 package services
 
-import "gannet/db/produce"
+import "gannet/services/produce"
 
 // Fetch
 // global database function which will grab a ProduceItem from the db.store by the given
