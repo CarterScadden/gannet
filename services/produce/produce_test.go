@@ -30,9 +30,4 @@ func TestValidateName(t *testing.T) {
 			t.Fatalf("`%s` marked as valid, when it should not be", shouldNot)
 		}
 	}
-
-	if err := ValidateName("Apples"); err == nil {
-		t.Fatal(err)
-	}
-
 }

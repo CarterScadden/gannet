@@ -10,7 +10,8 @@ WORKDIR /app
 
 # the test image of the app can be built and ran with: `docker build . --target test -t test-image && docker run test-image`
 from base as test
-RUN go test /app/db
+RUN go test /app/services/produce
+RUN go test /app/services
 RUN go test /app/server/handlers
 
 # the main image of the app, can be build and ran with `docker build . -t main-image && docker run -p <port to run on>:4000 main-image`

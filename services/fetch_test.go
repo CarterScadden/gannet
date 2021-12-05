@@ -1,7 +1,7 @@
-package db
+package services
 
 import (
-	"gannet/db/produce"
+	"gannet/services/produce"
 	"testing"
 )
 

@@ -1,12 +1,12 @@
-package db
+package services
 
 import (
 	"fmt"
-	"gannet/db/produce"
+	"gannet/services/produce"
 )
 
 // Insert
-// global database function which will append a ProduceItem to the db.store
+// function to append a ProduceItem to the services.store
 // fails with Conflict if any of the given produce items conflict with the store
 // or fails with BadRequest if any of the produce items fail to pass validation
 // else returns an Ok, with a nil error

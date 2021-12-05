@@ -1,6 +1,6 @@
-package db
+package services
 
-import "gannet/db/produce"
+import "gannet/services/produce"
 
 var (
 	store = []produce.ProduceItem{
